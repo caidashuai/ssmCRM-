@@ -13,11 +13,6 @@ public class userserviceImpl implements userservice {
     @Resource
     private userdao userdao;
     @Override
-    public List<user> selectuser() {
-        return userdao.selectuser();
-    }
-
-    @Override
     public user loginuser(String username, String pwd) {
       user user=new user();
         if (user!=null){

@@ -33,6 +33,5 @@ public class userconllter {
             return user1;
         }
         return usererror;
-
     }
 }
