@@ -1,6 +1,7 @@
 package com.cai.conllter;
 
 import com.cai.model.activity;
+import com.cai.model.pagevo;
 import com.cai.model.user;
 import com.cai.servicers.activityservice;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,9 @@ import utils.UUIDUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/activity")
@@ -42,5 +45,18 @@ public class activityconlter {
         System.out.println(a);
         int i =activityservice.insertactivity(a);
         return a;
+    }
+    @RequestMapping(value = "/pagelist.do")
+    @ResponseBody
+    public pagevo pagelist(Integer pagenum,Integer pagesize,String name,String owner,String starttime,String endtime){
+        Map<String,Object> map=new HashMap<>();
+        map.put("name",name);
+        map.put("owner",owner);
+        map.put("starttime",starttime);
+        map.put("endtime",endtime);
+        map.put("pagenum",(pagenum-1)*pagesize);
+        map.put("pagesize",pagesize);
+        pagevo pagevo=activityservice.pagelist(map);
+        return pagevo;
     }
 }

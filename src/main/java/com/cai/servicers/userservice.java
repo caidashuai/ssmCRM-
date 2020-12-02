@@ -1,6 +1,7 @@
 package com.cai.servicers;
 
 import com.cai.model.activity;
+import com.cai.model.pagevo;
 import com.cai.model.user;
 import org.springframework.stereotype.Service;
 

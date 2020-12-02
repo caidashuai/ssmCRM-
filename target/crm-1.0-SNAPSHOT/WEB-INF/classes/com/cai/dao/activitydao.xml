@@ -5,7 +5,8 @@
 <mapper namespace="com.cai.dao.activitydao">
     <select id="selectuser" resultType="com.cai.model.user">
         select * from tbl_user
-  </select>
+
+    </select>
     <insert id="insertactivity" >
                 insert  into tbl_activity(
                 id,
@@ -31,4 +32,52 @@
                 )
 
     </insert>
+    <select id="pageavtivity" resultType="com.cai.model.activity">
+        select
+        a.id,
+        a.name,
+        u.name as owner,
+        a.startDate,
+        a.endDate
+        from tbl_activity a
+        join tbl_user u
+        on a.owner=u.id
+        <where>
+            <if test="name!=null and name!=''">
+                a.name like '%' #{name} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+            <if test="starttime!=null and starttime!=''">
+                and a.startDate &gt; #{starttime}
+            </if>
+            <if test="endtime!=null and endtime!=''">
+                and a.endDate &lt; #{endtime}
+            </if>
+
+        </where>
+        order  by a.createtime desc
+        limit #{pagenum},#{pagesize}
+    </select>
+    <select id="pageavttivitytotol" resultType="int">
+        select count(*)
+        from tbl_activity a
+        join tbl_user u
+        on a.owner=u.id
+        <where>
+            <if test="name!=null and name!=''">
+                a.name like '%' #{name} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+            <if test="starttime!=null and starttime!=''">
+                and a.startDate &gt; #{starttime}
+            </if>
+            <if test="endtime!=null and endtime!=''">
+                and a.endDate &lt; #{endtime}
+            </if>
+        </where>
+    </select>
 </mapper>
